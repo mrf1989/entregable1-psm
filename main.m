@@ -9,37 +9,31 @@ clear all
 close all
 clc
 
-% Step 1.
 
-[x, Fs] = audio_analysis('psm.wav', 'original');
+% Recording...
 
-% Process low-pass filtering 6kHz
+[record, Fs] = audio_analysis('psm.wav', 'original');
+
+
+% Step 1. Filtering
+
 Fc = 6000;
 L = 51;
-processed_audio = audio_filter(x, L, Fc, Fs);
+processed_audio = audio_filter(record, L, Fc, Fs, 'Hann');
 
 
-% Step 2.
+% Step 2. Shifting frecuency
 
-shift = 34000;
+shift = 8000;
 fq_shifted_audio = fq_shift(processed_audio, shift);
-audiowrite('fq_shifted_audio.wav', fq_shifted_audio, Fs);
+audiowrite('audio/2-fq_shifted_audio.wav', fq_shifted_audio, Fs);
 str = ['filtrado desplazado en frecuencia ' num2str(shift/1000) ' kHz'];
-audio_analysis('fq_shifted_audio.wav', str);
+audio_analysis('audio/2-fq_shifted_audio.wav', str);
 
-%      O
-%      |
-%      |
-%      |
-% transmission
-%      |
-%      |
-%      |
-%      V
 
-% Step 3.
+% Step 3. Reconstructing
 
 reconstructed_audio = fq_shift(fq_shifted_audio, -shift);
-audiowrite('reconstructed_audio.wav', reconstructed_audio, Fs);
+audiowrite('audio/3-reconstructed_audio.wav', reconstructed_audio, Fs);
 str = ['reconstrucción del audio original filtrado'];
-audio_analysis('reconstructed_audio.wav', str);
+audio_analysis('audio/3-reconstructed_audio.wav', str);
