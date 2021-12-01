@@ -19,13 +19,14 @@ clc
 
 Fc = 6000;
 L = 51;
-processed_audio = audio_filter(record, L, Fc, Fs, 'Hann');
+[processed_audio, X]= audio_filter(record, L, Fc, Fs, 'Hann');
 
 
 % Step 2. Shifting frecuency
 
-shift = 8000;
-fq_shifted_audio = fq_shift(processed_audio, shift);
+shift = 6000;
+Xl = circshift(X, shift);
+fq_shifted_audio = ifft(Xl);
 audiowrite('audio/2-fq_shifted_audio.wav', fq_shifted_audio, Fs);
 str = ['filtrado desplazado en frecuencia ' num2str(shift/1000) ' kHz'];
 audio_analysis('audio/2-fq_shifted_audio.wav', str);
@@ -33,7 +34,4 @@ audio_analysis('audio/2-fq_shifted_audio.wav', str);
 
 % Step 3. Reconstructing
 
-reconstructed_audio = fq_shift(fq_shifted_audio, -shift);
-audiowrite('audio/3-reconstructed_audio.wav', reconstructed_audio, Fs);
-str = ['reconstrucción del audio original filtrado'];
-audio_analysis('audio/3-reconstructed_audio.wav', str);
+audio_reconstruction('audio/2-fq_shifted_audio.wav', shift, 81);
