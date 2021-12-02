@@ -24,7 +24,7 @@ L = 51;
 
 % Step 2. Shifting frecuency
 
-shift = 6000;
+shift = 34000;
 Xl = circshift(X, shift);
 fq_shifted_audio = ifft(Xl);
 audiowrite('audio/2-fq_shifted_audio.wav', fq_shifted_audio, Fs);
@@ -34,4 +34,4 @@ audio_analysis('audio/2-fq_shifted_audio.wav', str);
 
 % Step 3. Reconstructing
 
-audio_reconstruction('audio/2-fq_shifted_audio.wav', shift, 81);
+audio_reconstruction('audio/2-fq_shifted_audio.wav', shift, L);
