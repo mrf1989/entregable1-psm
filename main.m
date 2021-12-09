@@ -9,10 +9,15 @@ clear all
 close all
 clc
 
+% Dependencies
+
+pkg load signal
+
+
 
 % Recording...
 
-[record, Fs] = audio_analysis('psm.wav', 'original', [0.2 0.7 0.1]);
+[record, Fs] = audio_analysis('audio/psm.wav', 'original', [0.2 0.7 0.1]);
 
 
 % Step 1. Filtering
@@ -24,7 +29,7 @@ L = 51;
 
 % Step 2. Shifting frecuency
 
-shift = 80000;
+shift = 90000;
 Xl = circshift(X, shift);
 fq_shifted_audio = ifft(Xl);
 audiowrite('audio/2-fq_shifted_audio.wav', fq_shifted_audio, Fs);
