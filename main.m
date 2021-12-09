@@ -5,19 +5,20 @@
 %   Versión: v2.0
 %   Fecha: 12/2021
 
+
+% Step 0. Starting...
+
 clear all
 close all
 clc
 
 % Dependencies
-
 pkg load signal
 
-
-
 % Recording...
-
 [record, Fs] = audio_analysis('audio/psm.wav', 'original', [0.2 0.7 0.1]);
+
+% ------------------------------------------------------------------------------
 
 
 % Step 1. Filtering
@@ -25,6 +26,8 @@ pkg load signal
 Fc = 6000;
 L = 51;
 [processed_audio, X]= audio_filter(record, L, Fc, Fs, 'Hann');
+
+% ------------------------------------------------------------------------------
 
 
 % Step 2. Shifting frecuency
@@ -36,7 +39,11 @@ audiowrite('audio/2-fq_shifted_audio.wav', fq_shifted_audio, Fs);
 str = ['filtrado desplazado en frecuencia ' num2str(shift/1000) ' kHz'];
 audio_analysis('audio/2-fq_shifted_audio.wav', str, [0.8 0.7 0.2]);
 
+% ------------------------------------------------------------------------------
+
 
 % Step 3. Reconstructing
 
 audio_reconstruction('audio/2-fq_shifted_audio.wav', shift, L, Fs);
+
+% ------------------------------------------------------------------------------
