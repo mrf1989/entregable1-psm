@@ -4,14 +4,18 @@ function h = lp_filter(L, fc, window)
   h = 2*fc*sinc(2*fc*(n-M));
   
   switch window
-    case 'Hann'
+    case 1
       w = hann_window(n, L);
-    case 'Hamming'
+      disp('Filtrado utilizando ventana de Hann');
+    case 2
       w = hamming_window(n, L);
-    case 'Blackman'
+      disp('Filtrado utilizando ventana de Hamming');
+    case 3
       w = blackman_window(n, L);
+      disp('Filtrado utilizando ventana de Blackman');
     otherwise
       w = ones(1, L);
+      disp('Filtrado utilizando ventana rectangular');
   end
       
   h = h .* w;

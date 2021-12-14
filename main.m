@@ -2,7 +2,7 @@
 % 
 %   Título: Desplazamiento frecuencial de señales de audio
 %   Autor: Mario Ruano Fernández < mruano@us.es >
-%   Versión: v2.0
+%   Versión: v3.0
 %   Fecha: 12/2021
 
 
@@ -20,30 +20,20 @@ pkg load signal
 
 % ------------------------------------------------------------------------------
 
-
 % Step 1. Filtering
 
-Fc = 6000;
-L = 51;
-[processed_audio, X]= audio_filter(record, L, Fc, Fs, 'Hann');
+[filtered_audio, L, window] = audio_filter(record, Fs);
 
 % ------------------------------------------------------------------------------
-
 
 % Step 2. Shifting frecuency
 
-shift = 90000;
-Xl = circshift(X, shift);
-fq_shifted_audio = ifft(Xl);
-audiowrite('audio/2-fq_shifted_audio.wav', fq_shifted_audio, Fs);
-str = ['filtrado desplazado en frecuencia ' num2str(shift/1000) ' kHz'];
-audio_analysis('audio/2-fq_shifted_audio.wav', str, [0.8 0.7 0.2]);
+fq_shifted_audio = audio_modulation('audio/1-filtered_audio.wav');
 
 % ------------------------------------------------------------------------------
 
-
 % Step 3. Reconstructing
 
-audio_reconstruction('audio/2-fq_shifted_audio.wav', shift, L, Fs);
+audio_demodulation('audio/2-modulated_audio.wav', L, window, Fs);
 
 % ------------------------------------------------------------------------------
