@@ -1,4 +1,4 @@
-function modulated_audio = audio_modulation(audio_signal)
+function [modulated_audio, shift] = audio_modulation(audio_signal)
   [x, Fs] = audioread(audio_signal);
   
   F = input(['Seleccione la frecuencia en Hz de la señal moduladora (ENTER, '...
@@ -11,6 +11,7 @@ function modulated_audio = audio_modulation(audio_signal)
   disp(['Frecuencia de modulación: ' num2str(F) ' Hz']);
   
   modulated_audio = fq_shift(x, F);
+  shift = F;
   
   audiowrite('audio/2-modulated_audio.wav', modulated_audio, Fs);
   str = ['filtrado desplazado en frecuencia ' num2str(F/1000) ' kHz'];

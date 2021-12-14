@@ -1,12 +1,5 @@
-function audio_demodulation(audio_signal, L, window, Fs)
+function audio_demodulation(audio_signal, F, L, window)
   [x, Fs] = audioread(audio_signal);
-  
-  F = input(['Seleccione la frecuencia en Hz de la señal demoduladora (ENTER'...
-    ', por defecto 80000): ']);
-    
-  if isempty(F)
-    F = 80000;
-  end
   
   disp(['Frecuencia de demodulación: ' num2str(F) ' Hz']);
   
@@ -25,7 +18,7 @@ function audio_demodulation(audio_signal, L, window, Fs)
       sound (reconstructed_audio, Fs);
       if input(['Para confirmar audio, pulse 1 y después ENTER.' ...
           ' Pulse ENTER para ajustar la frecuencia: ']) == 1
-        gain = input(['Si lo desea, introduzca un valor de ganancia (dB): ']);
+        gain = input(['Si lo desea, introduzca un factor de ganancia (dB): ']);
         if isempty(gain) || gain <= 0
           gain = 1;
         end

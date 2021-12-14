@@ -28,12 +28,12 @@ pkg load signal
 
 % Step 2. Shifting frecuency
 
-fq_shifted_audio = audio_modulation('audio/1-filtered_audio.wav');
+[fq_shifted_audio, shift] = audio_modulation('audio/1-filtered_audio.wav');
 
 % ------------------------------------------------------------------------------
 
 % Step 3. Reconstructing
 
-audio_demodulation('audio/2-modulated_audio.wav', L, window, Fs);
+audio_demodulation('audio/2-modulated_audio.wav', shift, L, window);
 
 % ------------------------------------------------------------------------------
